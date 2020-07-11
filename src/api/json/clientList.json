@@ -1,0 +1,20 @@
+[
+    {
+        "groupName":"route-producer",
+        "name":"测试-客户端",
+		"key":"2df0678d-eaaa-43a3-b53c-9f83d0fe3568",
+        "ip":"127.0.0.1",
+		"registerNum":5,
+        "createTime":"2020-05-12 11:00:00",
+        "status":"0"
+    },
+	{
+	    "groupName":"route-producer",
+	    "name":"测试-客户端",
+		"key":"2df0678d-eaaa-43a3-b53c-9f83d0fe3568",
+	    "ip":"127.0.0.1",
+		"registerNum":4,
+	    "createTime":"2020-05-12 11:00:00",
+	    "status":"0"
+	}
+]
