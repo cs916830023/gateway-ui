@@ -4,7 +4,7 @@
 此项目为 [**flying-fish-gateway**](https://gitee.com/omsgit/flying-fish-gateway) 分布式飞鱼网关管理项目的配套前端管理界面，采用vue2 + element-ui 2.3.x开发；
 
 #### 软件架构
-软件架构说明：vue2.x 、 element-ui 2.3.x
+软件架构说明：node 6+、vue2.x 、 element-ui 2.3.x
 
 #### 安装依赖
 
