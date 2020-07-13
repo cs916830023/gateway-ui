@@ -60,7 +60,7 @@ module.exports = (options = {}) => ({
 	// 代理转发
     proxy: {
       '/api': {
-        target: 'http://192.168.11.45:8770',
+        target: 'http://127.0.0.1:8770',
         changeOrigin: true,
         pathRewrite: {
           '^/api': ''

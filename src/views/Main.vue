@@ -36,7 +36,7 @@ export default {
 		};
 	},
 	created: function() {		
-		
+		this.init();
 	},
 	mounted: function() {
   
@@ -45,7 +45,11 @@ export default {
 
 	},
 	methods:{
+		init(){
+			this.$router.replace('/loadBalanced'); 
+		},
 		handleSelect(key, keyPath) {
+			console.log(key);
 		}
 	}
 };
