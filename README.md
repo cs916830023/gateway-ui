@@ -8,12 +8,14 @@
 
 #### 安装依赖
 
-1.  cnpm install vue-router
-2.  cnpm install axios -S
-3.  cnpm install echarts
-4.  cnpm install echarts-gl
-5.  cnpm install --save babel-polyfill
+1.  cnpm install
+2.  cnpm install vue-router
+3.  cnpm install axios -S
+4.  cnpm install echarts
+5.  cnpm install echarts-gl
+6.  cnpm install --save babel-polyfill
 
+> 详细安装文档：**[flying-fish-gateway-说明文档.docx](https://gitee.com/omsgit/flying-fish-gateway/tree/snapshot.v.1.0/doc)**
 
 #### 使用说明
 
