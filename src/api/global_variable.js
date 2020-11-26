@@ -2,7 +2,7 @@
 // global_variable.js
 // 专门放置 全局变量
 
-//const 声明常量
+//const 声明常量,注意此处在webpack.config.js中做了代理转发
 const baseHost = "127.0.0.1:8010"
 const baseURL = "http://"+baseHost+"/api"
 const errMsg = "操作失败"

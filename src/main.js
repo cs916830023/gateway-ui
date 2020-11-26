@@ -14,6 +14,10 @@ import echarts from 'echarts'
 import 'echarts-gl'
 //  引入babel-polyfill, 'cnpm install --save babel-polyfill'
 import 'babel-polyfill'
+// import with ES6
+import mavonEditor from 'mavon-editor'
+import 'mavon-editor/dist/css/index.css'
+
 
 // require('echarts/lib/chart/bar')
 // require('echarts/lib/commponent/tooltip')
@@ -23,8 +27,10 @@ import 'babel-polyfill'
 import GLOBAL_VAR from './api/global_variable.js'
 import GLOBAL_FUN from './api/global_function.js'
 
+// use
 Vue.use(ElementUI)
 Vue.use(VueRouter)
+Vue.use(mavonEditor)
 
 //绑定到vue属性
 Vue.prototype.GLOBAL_VAR = GLOBAL_VAR

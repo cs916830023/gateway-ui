@@ -9,7 +9,7 @@ import AddClientGateway from '../views/AddClientGateway.vue'
 import GatewayTopology from '../views/GatewayTopology.vue'
 import LoadBalanced from '../views/LoadBalanced.vue'
 import CreateBalanced from '../views/CreateBalanced.vue'
-
+import ApiDoc from '../views/ApiDoc.vue'
 
 let routes = [
 	{
@@ -102,6 +102,14 @@ let routes = [
 			    hidden: true,
 				components: {
 					mainView: CreateBalanced
+				}
+			},
+			{
+			    path: '/apiDoc',
+			    name: '接口文档',
+			    hidden: true,
+				components: {
+					mainView: ApiDoc
 				}
 			},
 		]

@@ -377,6 +377,7 @@
 					this.limiter = route.limiter;
 					this.access = route.access;
 					this.idDisabled = true;
+					this.handleSelectedGroup(this.form.groupCode);
 				}
 			},
 			goBack() {
