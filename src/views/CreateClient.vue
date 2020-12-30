@@ -83,7 +83,7 @@ export default {
 		if (query){
 			this.handleType = query.handleType;
 			if (this.handleType === 'edit'){
-				this.nameDisabled = true;
+				// this.nameDisabled = true;
 				let client = query.client;
 				console.log('client', client);
 				this.init(client);

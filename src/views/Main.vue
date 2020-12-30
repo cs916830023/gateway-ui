@@ -5,12 +5,14 @@
 			<el-row>
 				<el-col :span="20" align="left">
 					<el-menu router :default-active="$route.path" mode="horizontal" @select="handleSelect"
-					background-color="#545c64" text-color="#fff" active-text-color="#ffd04b">						
+					background-color="#545c64" text-color="#fff" active-text-color="#ffd04b">
 						<el-menu-item index="/loadBalanced" class="iconfont icon-jichuguanli">负载管理</el-menu-item>
 						<el-menu-item index="/gatewayList" class="el-icon-connection">服务管理</el-menu-item>
 						<el-menu-item index="/clientList" class="el-icon-s-custom">客户端管理</el-menu-item>
 						<el-menu-item index="/ipList" class="iconfont icon-IP">IP名单管理</el-menu-item>
+						<el-menu-item index="/apiCount" class="el-icon-s-data">接口统计</el-menu-item>
 						<el-menu-item index="/apiDoc" class="el-icon-collection">接口文档</el-menu-item>
+						
 					</el-menu>
 				</el-col>
 				<el-col :span="4" style="line-height: 60px; height: 60px;">

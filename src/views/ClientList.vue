@@ -29,7 +29,7 @@
 				</el-col>
 			</el-row>
 			<el-table size="small" :data="tableData" style="width: 100%">
-				<el-table-column label="注册KEY(系统生成)" width="300">
+				<el-table-column label="客户端ID(系统生成)" width="300">
 					<template slot-scope="scope">
 						<el-tag size="small" type="warning" style="font-weight: bold;">{{scope.row.id}}</el-tag>
 					</template>
@@ -39,12 +39,12 @@
 						<el-tag v-for="group in groupOptions" :key="group.value" v-if="(group.value === scope.row.groupCode)" size="small" type="">{{group.label}}</el-tag>
 					</template>
 				</el-table-column>
-				<el-table-column label="名称">
+				<el-table-column label="名称" prop="name"></el-table-column>
+				<el-table-column label="IP地址">
 					<template slot-scope="scope">
-						<el-tag size="small" type="success">{{scope.row.name}}</el-tag>
+						<el-tag size="small" type="success">{{scope.row.ip}}</el-tag>
 					</template>
 				</el-table-column>
-				<el-table-column label="IP地址" prop="ip"></el-table-column>
 				<el-table-column label="创建时间" prop="createTime" width="220"></el-table-column>
 				<el-table-column label="状态" prop="status" width="100">
 					<template slot-scope="scope">

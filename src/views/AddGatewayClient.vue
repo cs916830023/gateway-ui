@@ -89,7 +89,7 @@
 								<div v-if="scope.row.regServerStatus==='1'"><i class="el-icon-error" style="color: #f00000;"></i>&nbsp;<el-tag size="mini" type="danger">{{'禁止通行'}}</el-tag></div>
 							</template>
 						</el-table-column>
-						<el-table-column label="注册时间" prop="regServerTime" width="240"></el-table-column>
+						<el-table-column label="注册时间" prop="regServerTime"></el-table-column>
 						<el-table-column label="备注" prop="remarks"></el-table-column>						
 						<el-table-column label="操作" width="100">
 							<template slot-scope="scope">

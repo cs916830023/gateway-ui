@@ -10,6 +10,7 @@ import GatewayTopology from '../views/GatewayTopology.vue'
 import LoadBalanced from '../views/LoadBalanced.vue'
 import CreateBalanced from '../views/CreateBalanced.vue'
 import ApiDoc from '../views/ApiDoc.vue'
+import ApiCount from '../views/ApiCount.vue'
 
 let routes = [
 	{
@@ -110,6 +111,14 @@ let routes = [
 			    hidden: true,
 				components: {
 					mainView: ApiDoc
+				}
+			},
+			{
+			    path: '/apiCount',
+			    name: '接口统计',
+			    hidden: true,
+				components: {
+					mainView: ApiCount
 				}
 			},
 		]

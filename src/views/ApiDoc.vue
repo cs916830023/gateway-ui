@@ -47,14 +47,14 @@
 				</el-card>
 				<!-- 在线markdown编辑器 https://gitee.com/wCHCw/mavonEditor -->
 				<span v-show="handleType=='edit'">
-					<mavon-editor v-model="content" :toolbars="toolbars" @keydown="" @save="save" style="height: 700px; margin-top: 18px;" />	
+					<mavon-editor v-show="handleType=='edit'" v-model="content" :toolbars="toolbars" @save="save" style="height: 700px; margin-top: 18px;" />	
 					<!-- 提交 -->
-					<el-button type="primary" style="margin-left: 47%; margin-top: 20px;" @click="save">保存</el-button>
+					<el-button v-show="handleType=='edit'" type="primary" style="margin-left: 47%; margin-top: 20px;" @click="save">保存</el-button>
 				</span>
 				
-				<span v-show="handleType==''">
-					<mavon-editor v-model="content" :subfield="false" :defaultOpen="'preview'" :toolbarsFlag="false" 
-					:editable="false" :scrollStyle="true" :ishljs="true" style="height: 700px; margin-top: 18px;" />
+				<span v-show="handleType==''"> 
+					<mavon-editor v-show="handleType==''" v-model="content" :subfield="false" :defaultOpen="'preview'" :toolbarsFlag="false" 
+					:editable="false" :scrollStyle="true" :ishljs="true" style="margin-top: 18px; " />
 				</span>
 			</el-col>
 		</el-row>
@@ -286,5 +286,8 @@ export default {
 		 font-size: 14px; 
 		 padding: 8px 0px ; 
 		 line-height: 20px;
-	 }	
+	 }
+	 .v-show-content {
+		 background-color: white !important;
+	 }
 </style>

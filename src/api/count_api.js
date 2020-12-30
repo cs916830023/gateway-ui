@@ -25,3 +25,26 @@ export const countBalancedRequest = data => {
     })
 };
 
+/**
+ * 获取网关路由集合
+ */
+export const countRoutePageList = data => {
+    return service({
+        url: '/count/route/pageList',
+        method: 'post',
+		loading: false,
+        data
+    })
+};
+
+/**
+ * 统计按7天和按24小时维度计算的请求总量
+ */
+export const countRequestTotal = data => {
+    return service({
+        url: '/count/request/total',
+        method: 'post',
+		loading: false,
+        data
+    })
+};
