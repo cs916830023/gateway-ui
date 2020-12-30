@@ -14,6 +14,7 @@
 4.  cnpm install echarts
 5.  cnpm install echarts-gl
 6.  cnpm install --save babel-polyfill
+7.  cnpm install mavon-editor --save
 
 > 详细安装文档：**[flying-fish-gateway-说明文档.docx](https://gitee.com/omsgit/flying-fish-gateway/tree/snapshot.v.1.0/doc)**
 
@@ -23,6 +24,25 @@
 2.  提前安装好nodejs,配置
 3.  编译：cnpm run build
 3.  运行：cnpm run dev
+
+#### 更新记录
+
+ ++++++++ **snapshot.v.2.0** 
+1. 代码优化，已知问题题修复
+2. 扩展功能：新增接口访问统计功能
+3. 优化：客户端名称可修改。
+注：前端需要同步更新到v.2.0
+
+ ++++++++ **snapshot.v.1.0** 
+1. 代码优化，已知问题题修复
+2. 扩展功能：接口文档，提供API接口文档描述功能
+3. 添加限流拦截之后的通用规范json格式输出
+
+ ++++++++ **master** 
+1. 初始版本
+2. 建立基础功能：负载管理、服务管理、客户端管理、IP名单管理
+3. 其它底层开发
+
 
 #### 参与贡献
 
