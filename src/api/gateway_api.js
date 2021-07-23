@@ -38,7 +38,7 @@ export const updateRoute = data => {
 };
 
 /**
- * 查询网关路由列表
+ * 查询网关路由分页列表
  */
 export const routePageList = data => {
     return service({

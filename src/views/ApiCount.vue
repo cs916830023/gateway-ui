@@ -54,7 +54,7 @@
 				</el-table-column>
 				<el-table-column label="分组">
 					<template slot-scope="scope">
-						<el-tag v-for="group in groupOptions" :key="group.value" v-if="(group.value === scope.row.groupCode)" size="small" type="">{{group.label}}</el-tag>
+						<el-tag v-for="group in groupOptions" :key="group.value" v-show="(group.value === scope.row.groupCode)" size="small" type="">{{group.label}}</el-tag>
 					</template>
 				</el-table-column>
 				<el-table-column label="服务名称">
@@ -65,7 +65,13 @@
 				<el-table-column label="服务地址" prop="uri"></el-table-column>
 				<el-table-column label="断言路径" prop="path"></el-table-column>
 				<!-- <el-table-column label="最近请求时间" prop="createTime" width="220"></el-table-column> -->
-				<el-table-column label="请求总次数" prop="count" width="100" style="font-weight: bold;"></el-table-column>
+				<el-table-column label="今日请求总次数" prop="count" width="140" style="font-weight: bold;"></el-table-column>
+				<el-table-column label="查看" width="80">
+						<template slot-scope="scope" style="border: 1px solid red;">
+							<el-button size="mini" @click="handleShowRouteCount(scope.row)" circle title="请点击选中查看" class="el-icon-s-data">
+							</el-button>
+						</template>
+					</el-table-column>	
 			</el-table>
 			<div class="block" style="margin-top: 20px;">
 				<el-pagination
@@ -78,13 +84,15 @@
 					:total="totalNum">
 				</el-pagination>
 			</div>
-		</el-card>
+		</el-card>		
+	
+		<routeRequestCountComponent ref="routeRequestCount"></routeRequestCountComponent>
 	</div>
 </template>
 
 <script>
+	import routeRequestCountComponent from '../component/RouteRequestCount.vue'
 	import {countRoutePageList, countRequestTotal} from '../api/count_api.js'
-	
 	export default {
 		data() {
 			return {
@@ -107,6 +115,9 @@
 				groupOptions: this.GLOBAL_VAR.groups
 			};
 		},
+		components:{
+			routeRequestCountComponent
+		},
 		created: function() {
 			this.init();			
 		},
@@ -127,6 +138,10 @@
 			handleCurrentChange(val) {
 				this.currentPage = val;
 				this.search();
+			},
+			handleShowRouteCount(row){
+				this.$refs.routeRequestCount.dialogFormVisible = true;
+				this.$refs.routeRequestCount.count(row);
 			},
 			count(){
 				let _this = this;

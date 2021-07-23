@@ -26,7 +26,7 @@
 				</div>
 			</div>
 			
-			<el-dialog title="添加服务端" :visible.sync="dialogFormVisible" width="35%" :close-on-click-modal="false">
+			<el-dialog title="添加服务端" :visible.sync="dialogFormVisible" width="40%" :close-on-click-modal="false">
 				<el-table size="mini" :data="routeTableData" style="width: 100%">
 					<el-table-column label="服务ID" prop="id"></el-table-column>
 					<el-table-column label="服务名称" prop="name"></el-table-column>
@@ -115,7 +115,6 @@
 					</el-card>
 				</el-col>
 			</el-row>
-			</el-card>
 		</el-card>
 	</div>
 </template>
@@ -146,7 +145,7 @@
 					],
 					loadUri: [
 						{ required: true, message: '请输入负载地址', trigger: 'blur' }, 
-						{ min: 2, max: 16, message: '长度在 2 到 160 个字符，如：/test.html', trigger: 'blur' },
+						{ min: 2, max: 160, message: '长度在 2 到 160 个字符，如：/test.html', trigger: 'blur' },
 					],
 					status: [
 						{ required: true, message: '请选择状态', trigger: 'change' }

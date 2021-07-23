@@ -35,17 +35,17 @@
 				<el-card class="box-card">
 				<el-table size="small" :data="tableData" style="width: 100%">
 					<el-table-column label="服务名称" prop="name"></el-table-column>
-					<el-table-column label="分组" width="120">
+					<el-table-column label="分组" width="110">
 						<template slot-scope="scope">
-							<el-tag v-for="group in groupOptions" :key="group.value" v-if="(group.value === scope.row.groupCode)" size="small" type="">{{group.label}}</el-tag>
+							<el-tag v-for="group in groupOptions" :key="group.value" v-show="(group.value === scope.row.groupCode)" size="small" type="">{{group.label}}</el-tag>
 						</template>
 					</el-table-column>
-					<el-table-column label="服务地址" :show-overflow-tooltip="true">
+					<el-table-column label="服务地址" width="250" :show-overflow-tooltip="true">
 						<template slot-scope="scope">
 							<el-tag size="small" type="success" style="font-weight: bold;">{{parent}}{{scope.row.loadUri}}</el-tag>
 						</template>
 					</el-table-column>
-					<el-table-column label="创建时间"  width="135" prop="createTime"></el-table-column>
+					<el-table-column label="创建时间" width="135" prop="createTime"></el-table-column>
 					<el-table-column label="状态" width="65" prop="status" :formatter="formatterStatus">
 						<template slot-scope="scope">
 							<el-tag effect="dark" size="small" v-if="scope.row.status === '0'" type="">启用</el-tag>
@@ -92,7 +92,7 @@
 				<el-card class="box-card">
 					<div style="margin-bottom: 14px;">
 						<i class="iconfont icon-wumoxing" style="font-size: 16pt; color: #90A0A5;"></i>
-						<span style="font-size: 14pt; color: #90A0A5; font-weight: bold; margin-left: 6px;">转发路由</span>
+						<span class="route-title">转发路由</span>
 					</div>
 					<el-collapse v-model="activeName">
 					  <el-collapse-item v-for="(item, index) in routeTable" :key="index" :name='(index + 1)'>
@@ -183,6 +183,7 @@
 				loadServerRegList({balancedId: row.id}).then(function(result){
 					if (result && result.data){
 						_this.routeTable = result.data;
+						console.log(_this.$refs.boxCard);
 						_this.$refs.boxCard.loadCard(result.data);
 					}
 				});
@@ -284,5 +285,11 @@
 	 		margin-left: 5px; 
 	 		font-size: 12pt; 
 	 		color: rgb(237, 237, 237) 
+	 }
+	 .route-title {
+		 font-size: 14pt; 
+		 color: #90A0A5; 
+		 font-weight: bold; 
+		 margin-left: 6px;
 	 }
 </style>

@@ -11,8 +11,8 @@
 						<el-menu-item index="/clientList" class="el-icon-s-custom">客户端管理</el-menu-item>
 						<el-menu-item index="/ipList" class="iconfont icon-IP">IP名单管理</el-menu-item>
 						<el-menu-item index="/apiCount" class="el-icon-s-data">接口统计</el-menu-item>
+						<el-menu-item index="/apiMonitor" class="iconfont icon-gaojing">接口监控</el-menu-item>
 						<el-menu-item index="/apiDoc" class="el-icon-collection">接口文档</el-menu-item>
-						
 					</el-menu>
 				</el-col>
 				<el-col :span="4" style="line-height: 60px; height: 60px;">

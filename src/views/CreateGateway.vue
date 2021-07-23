@@ -100,37 +100,6 @@
 			<el-col :span="6">
 				<el-card class="box-card">
 					<div slot="header" class="clearfix">
-						<span>过滤器</span>
-						<el-button style="float: right; padding: 3px 0; " icon="el-icon-question" type="text">说明</el-button>
-					</div>
-					<el-collapse accordion>
-					  <el-collapse-item>
-					    <template slot="title">
-					      IP过滤&nbsp;&nbsp;<i v-show="filter.ipChecked" class="header-icon el-icon-success" style="color: #34bfa3; font-size: 12pt;"></i>
-					    </template>
-					    <div><el-checkbox v-model="filter.ipChecked">启用</el-checkbox></div>
-					    <div>基于IP进行拦截，只有客户端管理中添加对本网关服务连接权限的指定IP才能访问本路由地址。</div>
-					  </el-collapse-item>
-					  <el-collapse-item>
-						  <template slot="title">
-						    TOKEN过滤&nbsp;&nbsp;<i v-show="filter.tokenChecked" class="header-icon el-icon-success" style="color: #34bfa3; font-size: 12pt;"></i>
-						  </template>
-					    <div><el-checkbox v-model="filter.tokenChecked">启用</el-checkbox></div>
-					    <div>基于TOKEN进行拦截，只有符合指定TOKEN才能访问本路由地址。</div>
-					  </el-collapse-item>
-					  <el-collapse-item>
-						  <template slot="title">
-						    ID过滤&nbsp;&nbsp;<i v-show="filter.idChecked" class="header-icon el-icon-success" style="color: #34bfa3; font-size: 12pt;"></i>
-						  </template>
-					    <div><el-checkbox v-model="filter.idChecked">启用</el-checkbox></div>
-					    <div>基于ID进行拦截，只有符合指定ID才能访问本路由地址。</div>
-					  </el-collapse-item>
-					</el-collapse>
-				</el-card>
-			</el-col>
-			<el-col :span="6">
-				<el-card class="box-card">
-					<div slot="header" class="clearfix">
 						<span>熔断器</span>
 						<el-button style="float: right; padding: 3px 0; " icon="el-icon-question" type="text">说明</el-button>
 					</div>
@@ -161,7 +130,90 @@
 					  </el-collapse-item>
 					</el-collapse>
 				</el-card>
+				
+				<el-card class="box-card" style="margin-top: 20px;">
+					<div slot="header" class="clearfix">
+						<span>监控器</span>
+						<el-popover trigger="click" placement="bottom">
+							<div style="font-size: 10pt;">
+								<span>配置说明：</span><br/>
+								<span>1.只向网关服务发起http请求，只有服务host和port，不含请求路径和参数。</span><br/>
+								<span>2.未超时则认为服务存活，不考虑服务有效性。</span><br/>
+								<span>3.心跳检测请求Header中带<span style="font-weight: bold;">Keepalive:flying-fish-gateway</span>，服务可做特殊性响应。</span><br/>
+								<span>4.心跳检测服务URL示例：http://server:port、http://server.com、lb://xxx 。</span><br/>
+								<span>5.网关服务无客户端请求后，每30秒触发一次心跳检测</span><br/>
+								<span>6.告警重试设置为禁用后，心跳检测失败后，将不再继续检测，并且网关将会拒绝所有客户端请求，直到网关服务状态为：启用</span>
+							</div>
+							<el-button slot="reference" style="float: right; padding: 3px 0; " icon="el-icon-question" type="text" title="说明">说明</el-button>
+						</el-popover>
+					</div>
+					<el-collapse accordion>
+					  <el-collapse-item>
+					    <template slot="title">
+					      监控告警&nbsp;&nbsp;<i v-show="monitor.checked" class="header-icon el-icon-success" style="color: #34bfa3; font-size: 12pt;"></i>
+					    </template>
+					    <div><el-checkbox v-model="monitor.checked">启用</el-checkbox></div>
+					    <div>基于网关服务心跳检测，当网关服务正常运行中，没有客户端请求后，开始每30秒一次心跳检测。</div>
+						<div style="margin-top: 10px;">
+							<el-popover placement="bottom" width="170" trigger="click">
+								<el-radio v-model="form.monitor.recover" label="0">启用</el-radio>
+								<el-radio v-model="form.monitor.recover" label="1">禁用</el-radio>
+								<el-button slot="reference">告警重试：{{form.monitor.recover === '0'?'启用':'禁用'}}<i class="el-icon-caret-bottom el-icon--right"></i></el-button>
+							</el-popover>
+							<el-popover placement="bottom" width="460" trigger="click">
+								<el-radio-group v-model="form.monitor.frequency" size="mini" @change="handleSelectedMonitorFrequency">
+									<el-radio-button v-for="item in monitorOptions" :key="item.value" :label="item.value">{{item.label}}</el-radio-button>
+								</el-radio-group>
+								<el-button slot="reference">告警通知频率：{{monitorFrequencyName}}<i class="el-icon-caret-bottom el-icon--right"></i></el-button>
+							</el-popover>
+						</div>
+						<div style="margin-top: 10px;">
+							<el-input size="small" placeholder="示例：user1@qq.com,user2@qq.com" v-model="form.monitor.emails" maxlength="200" show-word-limit>
+							  <template slot="prepend">通知邮箱</template>
+							</el-input>
+						</div>
+						<div style="margin-top: 10px;">
+							<el-input size="small" placeholder="示例：XXX网关服务发生告警，请及时处理" v-model="form.monitor.topic" maxlength="200" show-word-limit>
+							  <template slot="prepend">告警提示</template>
+							</el-input>
+						</div>
+					  </el-collapse-item>
+					</el-collapse>
+				</el-card>
 			</el-col>
+
+			<el-col :span="6">
+				<el-card class="box-card">
+					<div slot="header" class="clearfix">
+						<span>过滤器</span>
+						<el-button style="float: right; padding: 3px 0; " icon="el-icon-question" type="text">说明</el-button>
+					</div>
+					<el-collapse accordion>
+					  <el-collapse-item>
+					    <template slot="title">
+					      IP过滤&nbsp;&nbsp;<i v-show="filter.ipChecked" class="header-icon el-icon-success" style="color: #34bfa3; font-size: 12pt;"></i>
+					    </template>
+					    <div><el-checkbox v-model="filter.ipChecked">启用</el-checkbox></div>
+					    <div>基于IP进行拦截，只有客户端管理中添加对本网关服务连接权限的指定IP才能访问本路由地址。</div>
+					  </el-collapse-item>
+					  <el-collapse-item>
+						  <template slot="title">
+						    TOKEN过滤&nbsp;&nbsp;<i v-show="filter.tokenChecked" class="header-icon el-icon-success" style="color: #34bfa3; font-size: 12pt;"></i>
+						  </template>
+					    <div><el-checkbox v-model="filter.tokenChecked">启用</el-checkbox></div>
+					    <div>基于TOKEN进行拦截，只有符合指定TOKEN才能访问本路由地址。</div>
+					  </el-collapse-item>
+					  <el-collapse-item>
+						  <template slot="title">
+						    ID过滤&nbsp;&nbsp;<i v-show="filter.idChecked" class="header-icon el-icon-success" style="color: #34bfa3; font-size: 12pt;"></i>
+						  </template>
+					    <div><el-checkbox v-model="filter.idChecked">启用</el-checkbox></div>
+					    <div>基于ID进行拦截，只有符合指定ID才能访问本路由地址。</div>
+					  </el-collapse-item>
+					</el-collapse>
+				</el-card>
+			</el-col>
+			
 			<el-col :span="6">
 				<el-card class="box-card">
 					<div slot="header" class="clearfix">
@@ -314,7 +366,13 @@
 					fallbackTimeout:0,
 					replenishRate:20,
 					burstCapacity:100,
-					groupCode:''
+					groupCode:'',
+					monitor:{
+						recover: '0',
+						frequency: '30m',
+						emails: '',
+						topic: ''
+					}
 				},			
 				filter:{
 					ipChecked: false,
@@ -337,6 +395,9 @@
 					timeChecked: false,
 					cookieChecked: false
 				},
+				monitor: {
+					checked: false
+				},
 				handleType: 'add',
 				idDisabled: false,
 				methodOptions: [
@@ -345,6 +406,14 @@
 					{value: 'GET',label: 'GET'},
 					{value: 'PUT',label: 'PUT'},
 					{value: 'DELETE',label: 'DELETE'},
+				],
+				monitorFrequencyName: '',
+				monitorOptions: [
+					{value: '30m',label: '30分钟一次'},
+					{value: '1h', label: '1小时一次'},
+					{value: '5h',label: '5小时一次'}, 
+					{value: '12h',label: '12小时一次'},
+					{value: '24h',label: '24小时一次'}
 				],
 				groupName:'',
 				groupOptions: this.GLOBAL_VAR.groups
@@ -363,10 +432,8 @@
 			}
 		},
 		mounted: function() {
-		
 		},
 		beforeDestroy: function() {
-			
 		},
 		methods:{
 			init(route) {
@@ -376,8 +443,18 @@
 					this.hystrix = route.hystrix;
 					this.limiter = route.limiter;
 					this.access = route.access;
+					this.monitor = route.monitor;
 					this.idDisabled = true;
+					if (this.form.monitor == undefined){
+						this.form.monitor = {
+							recover: '0',
+							frequency: '30m',
+							emails: '',
+							topic: ''
+						};
+					}
 					this.handleSelectedGroup(this.form.groupCode);
+					this.handleSelectedMonitorFrequency(this.form.monitor? this.form.monitor.frequency: null);
 				}
 			},
 			goBack() {
@@ -393,7 +470,6 @@
 				this.limiter.idChecked = (this.limiter.idChecked && type === 'id')?true:false;
 			},
 			handleSelectedGroup(val){
-				console.log(val)
 				let size = this.groupOptions.length;
 				for (var i=0;i <size; i++){
 					if (this.groupOptions[i].value === val){
@@ -402,10 +478,19 @@
 					}
 				}
 			},
+			handleSelectedMonitorFrequency(val){
+				if (val){
+					let size = this.monitorOptions.length;
+					for (var i=0;i <size; i++){
+						if (this.monitorOptions[i].value === val){
+							this.monitorFrequencyName = this.monitorOptions[i].label;
+							break;
+						}
+					}
+				}
+			},
 			submit(){
-				let data = {form:this.form, filter:this.filter, hystrix:this.hystrix, limiter:this.limiter, access:this.access};
-				console.log(data);
-				console.log(JSON.stringify(data))
+				let data = {form:this.form, filter:this.filter, hystrix:this.hystrix, limiter:this.limiter, access:this.access, monitor:this.monitor};
 				let _this = this;
 				if (this.handleType === 'edit'){
 					updateRoute(data).then(function(result){
@@ -463,3 +548,4 @@
 	clear: both;
 }
 </style>
+

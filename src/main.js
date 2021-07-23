@@ -51,6 +51,7 @@ VueRouter.prototype.push = function push(location, onResolve, onReject) {
  * 创建 router 实例，然后传 `routes` 配置
  */
 const router = new VueRouter({
+	base: '/ffgateway/', //定义项目根目录名称，对应nginx的代理规则名称
 	mode: 'history', //模式设为history，否则跳转时 URL 上会带有 # 符号
 	routes//（缩写）相当于 routes: routes
 })

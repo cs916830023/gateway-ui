@@ -1,9 +1,9 @@
 <template>
 	<div>
 		<el-page-header @back="goBack" content="已注册服务端管理"></el-page-header>
-		<el-dialog title="添加服务端" :visible.sync="dialogFormVisible" width="35%" :close-on-click-modal="false">
+		<el-dialog title="添加服务端" :visible.sync="dialogFormVisible" width="40%" :close-on-click-modal="false">
 			<el-table size="mini" :data="routeTableData" style="width: 100%">
-				<el-table-column label="服务ID" prop="id" width="140"></el-table-column>
+				<el-table-column label="服务ID" prop="id"></el-table-column>
 				<el-table-column label="服务名称" prop="name"></el-table-column>
 				<el-table-column label="服务地址" prop="uri"></el-table-column>
 				<el-table-column label="操作" width="60">

@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<el-dialog title="IP管理" :visible.sync="dialogFormVisible" width="30%" :close-on-click-modal="false">
-			<el-form :model="form" ref="form" :label-width="formLabelWidth":rules="rules">
+			<el-form :model="form" ref="form" :label-width="formLabelWidth" :rules="rules">
 				<el-form-item label="IP" size="mini" prop="ip">
 					<el-input v-model="form.ip" autocomplete="off" :maxlength="15" style="width: 240px;"></el-input>
 				</el-form-item>

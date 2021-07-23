@@ -36,7 +36,7 @@
 				</el-table-column>
 				<el-table-column label="分组" width="120">
 					<template slot-scope="scope">
-						<el-tag v-for="group in groupOptions" :key="group.value" v-if="(group.value === scope.row.groupCode)" size="small" type="">{{group.label}}</el-tag>
+						<el-tag v-for="group in groupOptions" :key="group.value" v-show="(group.value === scope.row.groupCode)" size="small" type="">{{group.label}}</el-tag>
 					</template>
 				</el-table-column>
 				<el-table-column label="服务名称" prop="name"></el-table-column>
@@ -239,6 +239,9 @@
 						parameterChecked: row.filterAuthorizeName!=null && row.filterAuthorizeName.indexOf('parameter')!=-1,
 						timeChecked: row.filterAuthorizeName!=null && row.filterAuthorizeName.indexOf('time')!=-1,
 						cookieChecked: row.filterAuthorizeName!=null && row.filterAuthorizeName.indexOf('cookie')!=-1
+					},
+					monitor:{
+						checked: row.monitor && row.monitor.status != '1'
 					}
 				}
 				return route;

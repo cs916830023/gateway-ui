@@ -47,9 +47,9 @@
 				</el-card>
 				<!-- 在线markdown编辑器 https://gitee.com/wCHCw/mavonEditor -->
 				<span v-show="handleType=='edit'">
-					<mavon-editor v-show="handleType=='edit'" v-model="content" :toolbars="toolbars" @save="save" style="height: 700px; margin-top: 18px;" />	
+					<mavon-editor v-show="handleType=='edit'" v-model="content" :toolbars="toolbars" @save="handleSave" style="height: 700px; margin-top: 18px;" />	
 					<!-- 提交 -->
-					<el-button v-show="handleType=='edit'" type="primary" style="margin-left: 47%; margin-top: 20px;" @click="save">保存</el-button>
+					<el-button v-show="handleType=='edit'" type="primary" style="margin-left: 47%; margin-top: 20px;" @click="handleSave">保存</el-button>
 				</span>
 				
 				<span v-show="handleType==''"> 
@@ -216,6 +216,17 @@ export default {
 				done();
 			// }).catch(_ => {});
 		},
+		handleSave(){
+			let isSubmit = true;
+			if (this.content == null || this.content == undefined || this.content == '' || this.content.length <= 0){
+				isSubmit = false;
+				this.$confirm('文档内空是空的，请确认是否提交？').then(_ => {
+					this.save()
+				}).catch(_ => {});
+			}else {
+				this.save()
+			}
+		},
 		getTableDataItem(id){//获取数组中的指定ID对象
 			let routeData = {};
 			let length = this.tableData.length;
@@ -229,23 +240,12 @@ export default {
 			return routeData;
 		},
 		save(){//保存文档
-			let routeId = this.infoForm.id;
-			let isSubmit = true;
-			if (this.content == null || this.content == undefined || this.content == '' || this.content.length <= 0){
-				isSubmit = false;
-				this.$confirm('文档内空是空的，请确认是否提交？').then(_ => {
-					isSubmit = true;
-				}).catch(_ => {});
-			}
-			
-			if (isSubmit){
-				let _this = this;
-				saveApiDoc({id:routeId, content: this.content}).then(function(result){
-					console.log(result);
-					_this.handleType = '';
-					_this.GLOBAL_FUN.successMsg();
-				});
-			}
+			let _this = this;
+			saveApiDoc({id:this.infoForm.id, content: this.content}).then(function(result){
+				console.log(result);
+				_this.handleType = '';
+				_this.GLOBAL_FUN.successMsg();
+			});
 		},
 		getApiDoc(id){//获取文档
 			this.content = '';

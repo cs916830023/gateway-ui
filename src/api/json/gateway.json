@@ -1,0 +1,42 @@
+{
+    "form":{
+        "name":"CRM-用户信息",
+        "routeId":"crm-userInof",
+        "stripPrefix":"1",
+        "status":"1",
+        "uri":"http://192.168.11.45:8769/",
+		"method": "POST",
+        "path":"/route/userinfo/**",
+        "requestParameter":"version,v1.0",
+        "accessHeader":"Remote Address: 127.0.0.1:8010",
+        "accessIp":"127.0.0.1",
+        "accessParameter":"token=aif1iadfsd92ladf2",
+        "accessTime":"00:00:00,12:00:00",
+        "accessCookie":"user=jiang",
+        "fallbackMsg":"timeout error!",
+        "fallbackTimeout":"3000",
+        "replenishRate":60,
+        "burstCapacity":100
+    },
+    "filter":{
+        "ipChecked":true,
+        "tokenChecked":true,
+        "idChecked":true
+    },
+    "hystrix":{
+        "defaultChecked":false,
+        "customChecked":true
+    },
+    "limiter":{
+        "ipChecked":true,
+        "uriChecked":false,
+        "idChecked":false
+    },
+    "access":{
+        "headerChecked":true,
+        "ipChecked":true,
+        "parmChecked":true,
+        "timeChecked":true,
+        "cookieChecked":true
+    }
+}

@@ -11,6 +11,7 @@ import LoadBalanced from '../views/LoadBalanced.vue'
 import CreateBalanced from '../views/CreateBalanced.vue'
 import ApiDoc from '../views/ApiDoc.vue'
 import ApiCount from '../views/ApiCount.vue'
+import ApiMonitor from '../views/ApiMonitor.vue'
 
 let routes = [
 	{
@@ -121,6 +122,14 @@ let routes = [
 					mainView: ApiCount
 				}
 			},
+			{
+			    path: '/apiMonitor',
+			    name: '接口监控',
+			    hidden: true,
+				components: {
+					mainView: ApiMonitor
+				}
+			}			
 		]
 	}, 
 	

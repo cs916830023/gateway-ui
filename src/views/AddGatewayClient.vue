@@ -1,8 +1,8 @@
 <template>
 	<div>
 		<el-page-header @back="goBack" content="已注册客户端管理"></el-page-header>
-		<el-dialog title="添加客户端" :visible.sync="dialogFormVisible" width="38%" :close-on-click-modal="false">
-			<el-table size="mini" :data="clientTableData"KEYstyle="width: 100%">
+		<el-dialog title="添加客户端" :visible.sync="dialogFormVisible" width="40%" :close-on-click-modal="false">
+			<el-table size="mini" :data="clientTableData" style="width: 100%">
 				<el-table-column label="注册KEY" width="280">
 					<template slot-scope="scope">
 						<el-tag size="small" type="warning" style="font-weight: bold;">{{scope.row.id}}</el-tag>
@@ -10,7 +10,7 @@
 				</el-table-column>	
 				<el-table-column label="分组" width="120">
 					<template slot-scope="scope">
-						<el-tag v-for="group in groupOptions" :key="group.value" v-if="(group.value === scope.row.groupCode)" size="small" type="">{{group.label}}</el-tag>
+						<el-tag v-for="group in groupOptions" :key="group.value" v-show="(group.value === scope.row.groupCode)" size="small" type="">{{group.label}}</el-tag>
 					</template>
 				</el-table-column>
 				<el-table-column label="名称" prop="name"></el-table-column>
@@ -78,7 +78,7 @@
 						<el-table-column label="分组">
 							<template slot-scope="scope">
 								<!-- <el-tag size="small" type="">{{scope.row.groupCode}}</el-tag> -->
-								<el-tag v-for="group in groupOptions" :key="group.value" v-if="(group.value === scope.row.groupCode)" size="small" type="">{{group.label}}</el-tag>
+								<el-tag v-for="group in groupOptions" :key="group.value" v-show="(group.value === scope.row.groupCode)" size="small" type="">{{group.label}}</el-tag>
 							</template>
 						</el-table-column>
 						<el-table-column label="名称" prop="name"></el-table-column>

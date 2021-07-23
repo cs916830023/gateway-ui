@@ -2,7 +2,8 @@ const resolve = require('path').resolve
 const webpack = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const url = require('url')
-const publicPath = ''
+// 注意此处为公共根路径stu，同时配置main.js中new VueRouter({base: '/stu/'...}),最后nginx里需配置location /stu {...}
+const publicPath = '/ffgateway/'
 
 module.exports = (options = {}) => ({
   entry: {

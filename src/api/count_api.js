@@ -48,3 +48,15 @@ export const countRequestTotal = data => {
         data
     })
 };
+
+/**
+ * 统计按7天和按24小时维度计算的请求总量
+ */
+ export const countAppRequestTotal = data => {
+    return service({
+        url: '/count/request/app/total',
+        method: 'get',
+		loading: false,
+        data
+    })
+};
