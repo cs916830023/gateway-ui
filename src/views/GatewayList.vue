@@ -179,6 +179,7 @@
 					this.infoForm = obj.row;
 				}  else if (obj.command === 'edit'){
 					this.infoForm = obj.row;
+					console.log(obj.row);
 					this.$router.push({path:'/createGateway',query:{handleType:'edit',route:this.newRoute(obj.row)}});
 				} else if (obj.command === 'start'){
 					startRoute({id:obj.row.id}).then(function(result){
@@ -241,7 +242,7 @@
 						cookieChecked: row.filterAuthorizeName!=null && row.filterAuthorizeName.indexOf('cookie')!=-1
 					},
 					monitor:{
-						checked: row.monitor && row.monitor.status != '1'
+						checked: row.monitor != null && row.monitor.status != '1'
 					}
 				}
 				return route;
