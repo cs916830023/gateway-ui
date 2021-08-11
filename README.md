@@ -27,6 +27,14 @@
 
 #### 更新记录
 
+ ++++++++ **snapshot-nacos.v.3.0** 
+1. 升级springcloud Hoxton.SR10\springboot 2.3.9.RELEASE版本
+2. 去除eureka注册发现中心，改为nacos（2.0.3版本）实现动态服务注册与发现、配置管理
+3. 此版本基于snapshot.v.3.0改造，核心代码一致
+4. 增加示例子模块
+
+注：前端需要同步更新到nacos.v.3.0
+
  ++++++++ **snapshot.v.3.0** 
 1. 升级springcloud Hoxton.SR10\springboot 2.3.9.RELEASE版本
 2. 扩展功能：新增接口心跳监控、邮件告警功能
