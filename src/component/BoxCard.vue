@@ -27,7 +27,7 @@
 			<div style="padding-top: 35px;">
 				<div v-for="(item, index) in routeTable" :key="index" class="progress-item">
 					<span>{{item.name}}</span>
-					<el-progress :percentage="item.weight" :color="customColors" />
+					<el-progress :percentage="item.weight" :color="colors[index]" />
 				</div>
 			</div>
 		</div>
@@ -62,13 +62,14 @@ export default {
 				article_count: 1024,
 				pageviews_count: 1024
 			},
-			customColors: [
-				{ color: '#00ADD0', percentage: 20 },
-				{ color: '#FFA12F', percentage: 40 },
-				{ color: '#B62AFF', percentage: 60 },
-				{ color: '#727CF5', percentage: 80 },
-				{ color: '#1890FF', percentage: 100 }
-			]
+			colors: ['#00ADD0', '#FFA12F', '#B62AFF', '#727CF5', '#1890FF', '#00f6ff', '#20C0F4', '#95F300', '#04FDB8', '#AF5AFF'],
+			// customColors: [
+			// 	{ color: '#00ADD0', percentage: 20 },
+			// 	{ color: '#FFA12F', percentage: 40 },
+			// 	{ color: '#B62AFF', percentage: 60 },
+			// 	{ color: '#727CF5', percentage: 80 },
+			// 	{ color: '#1890FF', percentage: 100 }
+			// ]
 		};
 	},
 	created: function() {

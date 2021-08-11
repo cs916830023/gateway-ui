@@ -17,6 +17,10 @@
 				</el-col>
 				<el-col :span="4" style="line-height: 60px; height: 60px;">
 					  <!-- <el-avatar style="float: right; margin-top: 16px;" size="small" icon="el-icon-notebook-2" ></el-avatar> -->
+					  <span style="float: right; color: rgba(255, 255, 255, 0.5); margin-right: 20px; font-size: 14px;" title="系统版本">
+						<i class="el-icon-collection-tag el-icon--left"></i>
+						版本 snapshot-nacos.v.3.0
+					</span>
 				</el-col>
 			</el-row>
 		</el-header>

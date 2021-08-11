@@ -438,6 +438,7 @@
 		methods:{
 			init(route) {
 				if (route && route.form){
+					console.log(route)
 					this.form = route.form;
 					this.filter = route.filter;
 					this.hystrix = route.hystrix;
@@ -447,6 +448,7 @@
 					this.idDisabled = true;
 					if (this.form.monitor == undefined){
 						this.form.monitor = {
+							checked: false,
 							recover: '0',
 							frequency: '30m',
 							emails: '',
