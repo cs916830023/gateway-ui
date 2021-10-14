@@ -12,7 +12,7 @@
 					    <el-button icon="el-icon-folder-add" type="primary" @click="handleCreateGateway" title="创建网关服务"></el-button>
 					</div>
 					<div style="float: right;">
-					  <el-input placeholder="请输入网关服务名称" v-model="form.name" class="input-with-select" style="width: 620px;">
+					  <el-input placeholder="请输入网关服务名称" v-model="form.name" class="input-with-select" style="width: 620px;" clearable>
 						  <el-select v-model="form.groupCode" slot="prepend" placeholder="请选择分组" style="width: 140px; margin-right: 10px;">
 						  	<el-option label="所有" value=""/>
 						  	<el-option v-for="item in groupOptions" :key="item.value" :label="item.label" :value="item.value"/>
@@ -29,39 +29,61 @@
 				</el-col>
 			</el-row>
 			<el-table size="small" :data="tableData" style="width: 100%">
-				<el-table-column label="服务ID">
+				<el-table-column label="服务ID" width="250">
 					<template slot-scope="scope">
 						<el-tag size="small" type="warning" style="font-weight: bold;">{{scope.row.id}}</el-tag>
 					</template>
 				</el-table-column>
-				<el-table-column label="分组" width="120">
+				<el-table-column label="分组" width="100">
 					<template slot-scope="scope">
 						<el-tag v-for="group in groupOptions" :key="group.value" v-show="(group.value === scope.row.groupCode)" size="small" type="">{{group.label}}</el-tag>
 					</template>
 				</el-table-column>
-				<el-table-column label="服务名称" prop="name"></el-table-column>
-				<el-table-column label="服务地址" width="250" :show-overflow-tooltip="true">
+				<el-table-column label="系统代号>服务名称" width="300">
+					<template slot-scope="scope">
+						<span style="font-weight: bold;" v-if="scope.row.systemCode != undefined && scope.row.systemCode != ''">{{scope.row.systemCode}} ></span> {{scope.row.name}}
+					</template>
+				</el-table-column>
+				<el-table-column label="服务地址" :show-overflow-tooltip="true">
 					<template slot-scope="scope">
 						<el-tag size="small" type="success" style="font-weight: bold;">{{scope.row.uri}}</el-tag>
 					</template>
 				</el-table-column>
-				<el-table-column label="断言路径" prop="path"></el-table-column>
+				<el-table-column label="断言路径">
+					<template slot-scope="scope">
+						{{scope.row.path}}
+						<el-popover trigger="click" placement="bottom">
+							<div style="font-size: 10pt;">
+								<div style="margin-bottom: 8px;">
+									<i class="iconfont icon-zuzhiqunzu" style="font-size: 16pt; color: #90A0A5;"></i>
+									<span class="route-title">网关代理地址</span>
+								</div>
+								<span>
+									<el-tag size="small" type="success" style="font-weight: bold;">{{GLOBAL_VAR.gatewayRoutesURL}}{{scope.row.path}}</el-tag>
+									<el-button slot="reference" icon="el-icon-document-copy" type="text" @click="handleCopy(scope.row.path)" title="复制"></el-button>
+								</span>
+								<br/>
+							</div>
+							<el-button slot="reference" icon="iconfont icon-IP" type="text" title="网关代理地址"></el-button>
+						</el-popover>
+					</template>
+				</el-table-column>
 				<el-table-column label="请求模式" prop="method" width="70"></el-table-column>
-				<el-table-column label="熔断器" prop="filterHystrixName">
+				<el-table-column label="熔断器" prop="filterHystrixName" width="100">
 					<template slot-scope="scope">
 						<el-tag effect="plain" size="small" v-if="scope.row.filterHystrixName === 'default'" type="">全局方法</el-tag>
 						<el-tag effect="plain" size="small" v-if="scope.row.filterHystrixName === 'custom'" type="success">自定义方法</el-tag>
 					</template>
 				</el-table-column>
-				<el-table-column label="限流器" prop="filterRateLimiterName"></el-table-column>
+				<el-table-column label="限流器" prop="filterRateLimiterName" width="100"></el-table-column>
 				<el-table-column label="创建时间" width="140" prop="createTime"></el-table-column>
-				<el-table-column label="状态" width="90" prop="status" :formatter="formatterStatus">
+				<el-table-column label="状态" width="80" prop="status" :formatter="formatterStatus">
 					<template slot-scope="scope">
 						<el-tag effect="dark" size="small" v-if="scope.row.status === '0'" type="">启用</el-tag>
 						<el-tag effect="dark" size="small" v-if="scope.row.status === '1'" type="danger">禁用</el-tag>
 					</template>
 				</el-table-column>
-				<el-table-column label="操作" width="120">
+				<el-table-column label="操作" width="100">
 					<template :v-if="scope.row.id != null" slot-scope="scope">
 						<el-dropdown trigger="click" @command="handleCommandGateway">
 						   <el-button size="mini" type="warning">
@@ -100,7 +122,7 @@
 	</div>
 </template>
 
-<script>
+<script>	
 	import routeInfoComponent from '../component/RouteInfo.vue'
 	import {routePageList,startRoute,stopRoute,deleteRoute} from '../api/gateway_api.js'
 	
@@ -206,7 +228,11 @@
 				// this.$confirm('确认关闭？').then(_ => {
 					done();
 				// }).catch(_ => {});
-			},			
+			},
+			handleCopy(val){
+				let value = this.GLOBAL_VAR.gatewayRoutesURL + val;
+				this.GLOBAL_FUN.copy(value);
+			},
 			search(){
 				let _this = this;
 				routePageList({form : this.form, currentPage: this.currentPage, pageSize: this.pageSize}).then(function(result){

@@ -11,9 +11,17 @@
 								<span>配置说明：</span><br/>
 								<span>1.服务URL，支持http、https、server-id(lb://xxx)模式转发。</span><br/>
 								<span>2.断言Path，请根据实际API调用路径设置，不含服务host和port，可添加自定义前缀。</span><br/>
-								<span>3.断言StripPrefix根据值，截取断言Path多节斜杠后内容，拼接到服务URL上。</span><br/>
-								<span>4.服务URL示例：http://server:port、http://server.com、lb://xxx ,支持但不推荐：http://server:port/api.do。</span><br/>
-								<span>5.断言Path示例：/route/producer/** 或 /producer/api" 。</span>
+								<span>3.过滤StripPrefix根据值，截取断言Path多节斜杠后内容，拼接到服务URL上。</span><br/>
+								<span>4.重定向RewritePath，会将原始请求Path指向新的Path路径，但网关路由地址不变，如:/foo/abc指向/abc。</span><br/>
+								<span>5.断言Header，会查找原始请求Header头部信息，获取匹配项。</span><br/>
+								<span>6.示例：</span><br/>
+								<span>&nbsp;&nbsp;a.服务URL示例：http://server:port、http://server.com、lb://xxx ,支持但不推荐：http://server:port/api.do。</span><br/>
+								<span>&nbsp;&nbsp;b.断言Path示例：/route/producer/** 或 /producer/api。</span><br/>
+								<span>&nbsp;&nbsp;c.断言Host示例：**.my.com 或 my.com 、127.0.0.1:8771。</span><br/>
+								<span>&nbsp;&nbsp;d.断言RemoteAddr示例：192.168.1.1 或 192.168.1.1/100。</span><br/>
+								<span>&nbsp;&nbsp;e.重定向RewritePath示例：/foo/(?&lt;segment&gt;.*),/$\{segment}，需满足java正则表达示或参见官方。</span><br/>
+								<span>&nbsp;&nbsp;f.断言Header示例：Header=X-Request-Id, \d+，其中\d+表示正则匹配的任意值，需满足java正则表达示或参见官方。</span><br/>
+								<span>7.如配置多个断言项，则gateway网关采用断言组合匹配方式（and关系）转发到符合的路由服务中。</span>
 							</div>
 							<el-button slot="reference" style="padding: 3px 0; " icon="el-icon-question" type="text" title="说明"></el-button>
 						</el-popover>
@@ -33,6 +41,11 @@
 								</el-input>
 							</div>
 							<div style="float: left; margin-left: 10px;">
+								<el-input placeholder="示例：CRM" v-model="form.systemCode" style="width: 343px;">
+								  <template slot="prepend">系统代号</template>
+								</el-input>
+							</div>
+							<div style="float: left; margin-left: 10px;">
 								<el-input placeholder="示例：CRM-用户信息获取网关" v-model="form.name" style="width: 343px;">
 								  <template slot="prepend">名称</template>
 								</el-input>
@@ -45,20 +58,30 @@
 								</el-popover>
 							</div>
 							<div style="float: left; margin-left: 10px;">
+								<el-popover placement="bottom" trigger="click">
+								  <!-- <el-radio v-model="form.groupCode" v-for="item in groupOptions" :key="item.value" :label="item.label" :value="item.value" @change=""></el-radio> -->
+								  <el-radio-group v-model="form.groupCode" size="mini" @change="handleSelectedGroup">
+									  <el-radio-button v-for="item in groupOptions" :key="item.value" :label="item.value">{{item.label}}</el-radio-button>
+								  </el-radio-group>
+								  <el-button slot="reference">分组:{{groupName}}<i class="el-icon-caret-bottom el-icon--right"></i></el-button>
+								</el-popover>
+							</div>
+							<!-- <div style="float: left; margin-left: 10px;">
 								<el-popover placement="bottom" width="450" trigger="click">
 								  <el-input placeholder="示例：RequestParameter=version,v01" v-model="form.requestParameter" >
 									<template slot="prepend">RequestParameter=</template>
 								  </el-input>
-								  <el-button slot="reference">请求参数RequestParameter={{form.requestParameter}}<i class="el-icon-caret-bottom el-icon--right"></i></el-button>
+								  <el-button slot="reference">参数RequestParameter={{form.requestParameter}}<i class="el-icon-caret-bottom el-icon--right"></i></el-button>
 								</el-popover>
-							</div>
+							</div> -->
+							
 						</el-col>
 					</el-row>
 					
 					<el-row style="margin-top: 20px;">
 						<el-col :span="24">
 							<div style="float: left;">
-							  <el-input placeholder="请输入网关服务URL,示例:http://server:port、http://server.com、lb://xxx" v-model="form.uri" class="input-with-select" style="width: 800px;">
+							  <el-input placeholder="请输入网关服务URL,示例:http://server:port、http://server.com、lb://xxx" v-model="form.uri" class="input-with-select" style="width: 696px;">
 								<el-select v-model="form.method" slot="prepend" placeholder="请选择" style="width: 90px;">
 								   <el-option v-for="item in methodOptions" :key="item.value" :label="item.label" :value="item.value"/>
 								</el-select>
@@ -73,23 +96,59 @@
 								</el-popover>
 							</div>
 							<div style="float: left; margin-left: 10px;">
+								<el-popover placement="bottom" width="500" trigger="click">
+								  <el-input placeholder="示例：Header=X-Request-Id, \d+" v-model="form.header">
+									<template slot="prepend">Header=</template>
+								  </el-input>
+								  <el-button slot="reference" >断言Header={{form.header}}<i class="el-icon-caret-bottom el-icon--right"></i></el-button>
+								</el-popover>
+							</div>
+							<div style="float: left; margin-left: 10px;">
 								<el-popover placement="bottom" width="300" trigger="click">
 								  <el-input placeholder="示例：StripPrefix=1" v-model="form.stripPrefix">
 									<template slot="prepend">StripPrefix=</template>
 								  </el-input>
-								  <el-button slot="reference" >断言StripPrefix={{form.stripPrefix}}<i class="el-icon-caret-bottom el-icon--right"></i></el-button>
-								</el-popover>
-							</div>
-							<div style="float: left; margin-left: 10px;">
-								<el-popover placement="bottom" trigger="click">
-								  <!-- <el-radio v-model="form.groupCode" v-for="item in groupOptions" :key="item.value" :label="item.label" :value="item.value" @change=""></el-radio> -->
-								  <el-radio-group v-model="form.groupCode" size="mini" @change="handleSelectedGroup">
-									  <el-radio-button v-for="item in groupOptions" :key="item.value" :label="item.value">{{item.label}}</el-radio-button>
-								  </el-radio-group>
-								  <el-button slot="reference">分组:{{groupName}}<i class="el-icon-caret-bottom el-icon--right"></i></el-button>
+								  <el-button slot="reference" >过滤StripPrefix={{form.stripPrefix}}<i class="el-icon-caret-bottom el-icon--right"></i></el-button>
 								</el-popover>
 							</div>
 						</el-col>			
+					</el-row>
+
+					<el-row style="margin-top: 20px;">
+						<el-col :span="24">
+							<div style="float: left;">
+								<el-popover placement="bottom" width="400" trigger="click">
+								  <el-input placeholder="示例：Host=**.my.com,my.com" v-model="form.host" >
+									<template slot="prepend">Host=</template>
+								  </el-input>
+								  <el-button slot="reference">断言Host={{form.host}}<i class="el-icon-caret-bottom el-icon--right"></i></el-button>
+								</el-popover>
+							</div>
+							<div style="float: left; margin-left: 10px;">
+								<el-popover placement="bottom" width="400" trigger="click">
+								  <el-input placeholder="示例：RemoteAddr=192.168.1.1/100" v-model="form.remoteAddr" >
+									<template slot="prepend">RemoteAddr=</template>
+								  </el-input>
+								  <el-button slot="reference">断言RemoteAddr={{form.remoteAddr}}<i class="el-icon-caret-bottom el-icon--right"></i></el-button>
+								</el-popover>
+							</div>
+							<div style="float: left; margin-left: 10px;">
+								<el-popover placement="bottom" width="450" trigger="click">
+								  <el-input placeholder="示例：RequestParameter=version,v01" v-model="form.requestParameter" >
+									<template slot="prepend">RequestParameter=</template>
+								  </el-input>
+								  <el-button slot="reference">参数RequestParameter={{form.requestParameter}}<i class="el-icon-caret-bottom el-icon--right"></i></el-button>
+								</el-popover>
+							</div>
+							<div style="float: left; margin-left: 10px;">
+								<el-popover placement="bottom" width="500" trigger="click">
+								  <el-input placeholder="示例：RewritePath=/foo/(?<segment>.*), /$\{segment}" v-model="form.rewritePath">
+									<template slot="prepend">RewritePath=</template>
+								  </el-input>
+								  <el-button slot="reference" >重定向RewritePath={{form.rewritePath}}<i class="el-icon-caret-bottom el-icon--right"></i></el-button>
+								</el-popover>
+							</div>
+						</el-col>
 					</el-row>
 					
 				</el-card>
@@ -186,7 +245,17 @@
 				<el-card class="box-card">
 					<div slot="header" class="clearfix">
 						<span>过滤器</span>
-						<el-button style="float: right; padding: 3px 0; " icon="el-icon-question" type="text">说明</el-button>
+						<!-- <el-button style="float: right; padding: 3px 0; " icon="el-icon-question" type="text">说明</el-button> -->
+						<el-popover trigger="click" placement="bottom">
+							<div style="font-size: 10pt;">
+								<span>配置说明：</span><br/>
+								<span>1.IP过滤需要配置本网关路由的注册客户端，非注册客户端IP不可访问。</span><br/>
+								<span>2.IP名单管理中的禁止通行的IP不可访问本网关路由。</span><br/>
+								<span>3.TOKEN过滤目前只对请求Header中带<span style="font-weight: bold;">TOKEN</span>做非空验证，暂无其它响应。</span><br/>
+								<span>4.ID过滤对请求Header中带<span style="font-weight: bold;">CLIENTID</span>做较验，非注册客户端ID不可访问。</span><br/>
+							</div>
+							<el-button slot="reference" style="float: right; padding: 3px 0; " icon="el-icon-question" type="text" title="说明">说明</el-button>
+						</el-popover>
 					</div>
 					<el-collapse accordion>
 					  <el-collapse-item>
@@ -208,7 +277,7 @@
 						    ID过滤&nbsp;&nbsp;<i v-show="filter.idChecked" class="header-icon el-icon-success" style="color: #34bfa3; font-size: 12pt;"></i>
 						  </template>
 					    <div><el-checkbox v-model="filter.idChecked">启用</el-checkbox></div>
-					    <div>基于ID进行拦截，只有符合指定ID才能访问本路由地址。</div>
+					    <div>基于ID进行拦截，只有客户端管理中添加对本网关服务连接权限的指定ID才能访问本路由地址。</div>
 					  </el-collapse-item>
 					</el-collapse>
 				</el-card>
@@ -349,13 +418,18 @@
 		data() {
 			return {
 				form:{
-					name:'',
 					id:'',
+					systemCode:'',
+					name:'',
 					stripPrefix:'',
 					status:'1',
 					uri:'',
 					method:'',
 					path:'',
+					host:'',
+					remoteAddr:'',
+					header:'',
+					rewritePath:'',
 					requestParameter:'',
 					accessHeader:'',
 					accessIp:'',
@@ -438,7 +512,6 @@
 		methods:{
 			init(route) {
 				if (route && route.form){
-					console.log(route)
 					this.form = route.form;
 					this.filter = route.filter;
 					this.hystrix = route.hystrix;
@@ -508,12 +581,17 @@
 			resetForm() {
 				this.form = {
 					id: this.handleType === 'edit'?this.form.id:null,
-					name: null,
+					systemCode:null,
+					name:null,
 					stripPrefix:'',
 					status:'1',
 					uri:null,
 					method:null,
 					path:null,
+					host:null,
+					remoteAddr:null,
+					header:null,
+					rewritePath:null,
 					requestParameter:null,
 					accessHeader:null,
 					accessIp:null,

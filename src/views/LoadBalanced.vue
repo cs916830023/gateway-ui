@@ -12,7 +12,7 @@
 					    <el-button icon="el-icon-folder-add" type="primary" @click="handleCreateBalanced" title="创建负载服务"></el-button>
 					</div>
 					<div style="float: right;">
-					  <el-input placeholder="请输入网关服务名称" v-model="form.name" class="input-with-select" style="width: 620px;">
+					  <el-input placeholder="请输入网关服务名称" v-model="form.name" class="input-with-select" style="width: 620px;" clearable>
 						  <el-select v-model="form.groupCode" slot="prepend" placeholder="请选择分组" style="width: 140px; margin-right: 10px;">
 						  	<el-option label="所有" value=""/>
 						  	<el-option v-for="item in groupOptions" :key="item.value" :label="item.label" :value="item.value"/>
@@ -34,15 +34,34 @@
 			<el-col :span="11">
 				<el-card class="box-card">
 				<el-table size="small" :data="tableData" style="width: 100%">
-					<el-table-column label="服务名称" prop="name"></el-table-column>
-					<el-table-column label="分组" width="110">
+					<el-table-column label="服务名称">
+						<template slot-scope="scope">
+							<el-tag size="small" type="warning" style="font-weight: bold;">{{scope.row.name}}</el-tag>
+						</template>
+					</el-table-column>
+					
+					<el-table-column label="分组" width="90">
 						<template slot-scope="scope">
 							<el-tag v-for="group in groupOptions" :key="group.value" v-show="(group.value === scope.row.groupCode)" size="small" type="">{{group.label}}</el-tag>
 						</template>
 					</el-table-column>
-					<el-table-column label="服务地址" width="250" :show-overflow-tooltip="true">
+					<el-table-column label="断言地址" width="250" :show-overflow-tooltip="true">
 						<template slot-scope="scope">
-							<el-tag size="small" type="success" style="font-weight: bold;">{{parent}}{{scope.row.loadUri}}</el-tag>
+							{{parent}}{{scope.row.loadUri}}
+							<el-popover trigger="click" placement="bottom">
+								<div style="font-size: 10pt;">
+									<div style="margin-bottom: 8px;">
+										<i class="iconfont icon-zuzhiqunzu" style="font-size: 16pt; color: #90A0A5;"></i>
+										<span class="route-title">网关代理地址</span>
+									</div>
+									<span>
+										<el-tag size="small" type="success" style="font-weight: bold;">{{GLOBAL_VAR.gatewayRoutesURL}}{{parent}}{{scope.row.loadUri}}</el-tag>
+										<el-button slot="reference" style="padding: 3px 0; " icon="el-icon-document-copy" type="text" @click="handleCopy(scope.row.loadUri)" title="复制"></el-button>
+									</span>
+									<br/>
+								</div>
+								<el-button slot="reference" style="padding: 3px 0; " icon="iconfont icon-IP" type="text" title="网关代理地址"></el-button>
+							</el-popover>
 						</template>
 					</el-table-column>
 					<el-table-column label="创建时间" width="135" prop="createTime"></el-table-column>
@@ -98,7 +117,10 @@
 					  <el-collapse-item v-for="(item, index) in routeTable" :key="index" :name='(index + 1)'>
 					    <template slot="title" style="width: 100%;">
 							<div style="width: 100%;">
-								<el-tag size="" type="success" style="font-weight: bold; background-color: #FFFFFF; color: #303133;">{{item.name}}</el-tag>
+								<el-tag size="" type="success" style="font-weight: bold; background-color: #FFFFFF; color: #303133;">{{item.name}}
+									<i class="el-icon-circle-check" v-if="item.status === '0'" style="font-size: 12pt; font-weight: bold; color: #409EFF;" title="服务已启用"></i>
+									<i class="el-icon-circle-close" v-if="item.status === '1'" style="font-size: 12pt; font-weight: bold; color: #F56C6C;" title="服务已禁用"></i>
+								</el-tag>
 							</div>
 					    </template>
 					    <div style="line-height: 28px;color: #727CF5; font-weight: bold;"><i class="el-icon-s-promotion" style="font-size: 12pt; font-weight: bold;"></i>&nbsp;&nbsp;{{item.routeId}}</div>
@@ -184,7 +206,7 @@
 					if (result && result.data){
 						_this.routeTable = result.data;
 						console.log(_this.$refs.boxCard);
-						_this.$refs.boxCard.loadCard(result.data);
+						_this.$refs.boxCard.loadCard(_this.selectedId, result.data);
 					}
 				});
 			},
@@ -218,6 +240,10 @@
 				// this.$confirm('确认关闭？').then(_ => {
 					done();
 				// }).catch(_ => {});
+			},
+			handleCopy(val){
+				let value = this.GLOBAL_VAR.gatewayRoutesURL + this.parent + val;
+				this.GLOBAL_FUN.copy(value);
 			},
 			search(){
 				let _this = this;

@@ -24,13 +24,29 @@
 			<el-col :span="6" class="gateway-info-label">断言路径:</el-col>
 			<el-col :span="18" class="gateway-info-value"><el-tag size="small" type="success">{{infoForm.path}}</el-tag></el-col>
 		</el-row>
+		<el-row :gutter="24" v-if="infoForm.host != undefined && infoForm.host != ''" style="border: 0px solid red;">
+			<el-col :span="6" class="gateway-info-label">断言Host:</el-col>
+			<el-col :span="18" class="gateway-info-value"><el-tag size="small" type="success">{{infoForm.host}}</el-tag></el-col>
+		</el-row>
+		<el-row :gutter="24" v-if="infoForm.remoteAddr != undefined && infoForm.remoteAddr != ''" style="border: 0px solid red;">
+			<el-col :span="6" class="gateway-info-label">断言远程地址:</el-col>
+			<el-col :span="18" class="gateway-info-value"><el-tag size="small" type="success">{{infoForm.remoteAddr}}</el-tag></el-col>
+		</el-row>
+		<el-row :gutter="24" v-if="infoForm.header != undefined && infoForm.header != ''" style="border: 0px solid red;">
+			<el-col :span="6" class="gateway-info-label">断言Header:</el-col>
+			<el-col :span="18" class="gateway-info-value"><el-tag size="small" type="success">{{infoForm.header}}</el-tag></el-col>
+		</el-row>
 		<el-row :gutter="24" style="border: 0px solid red;">
 			<el-col :span="6" class="gateway-info-label">断言截取:</el-col>
-			<el-col :span="18" class="gateway-info-value"><el-tag size="small" type="success">StripPrefix = {{infoForm.stripPrefix}}</el-tag></el-col>
+			<el-col :span="18" class="gateway-info-value"><el-tag size="small" type="success">StripPrefix={{infoForm.stripPrefix}}</el-tag></el-col>
 		</el-row>
 		<el-row :gutter="24" style="border: 0px solid red;">
 			<el-col :span="6" class="gateway-info-label">请求参数:</el-col>
-			<el-col :span="18" class="gateway-info-value"><el-tag size="small" type="success">RequestParameter = {{infoForm.requestParameter}}</el-tag></el-col>
+			<el-col :span="18" class="gateway-info-value" :title="infoForm.requestParameter"><el-tag size="small" type="success">RequestParameter={{infoForm.requestParameter}}</el-tag></el-col>
+		</el-row>
+		<el-row :gutter="24" v-if="infoForm.rewritePath != undefined && infoForm.rewritePath != ''" style="border: 0px solid red;">
+			<el-col :span="6" class="gateway-info-label">重定向:</el-col>
+			<el-col :span="18" class="gateway-info-value" :title="infoForm.rewritePath"><el-tag size="small" type="success">{{infoForm.rewritePath}}</el-tag></el-col>
 		</el-row>
 		<el-row :gutter="24" style="border: 0px solid red;" v-if="infoForm.filterGatewaName != undefined && infoForm.filterGatewaName != ''">
 			<el-col :span="6" class="gateway-info-label">过滤器:</el-col>

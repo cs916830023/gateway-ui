@@ -10,9 +10,10 @@ export default {
 		return {};
 	},
 	methods: {
-		loadAccessCard(routeIds, dateType){
+		loadAccessCard(balancedId, routeIds, dateType){
 			let _this = this;
-			countBalancedRequest({routeIds: routeIds,dateType:dateType}).then(function(result){
+			console.log("balancedId", balancedId);
+			countBalancedRequest({balancedId: balancedId,routeIds: routeIds, dateType:dateType}).then(function(result){
 				if (result && result.data){
 					_this.drawLine(result.data);
 				}

@@ -55,6 +55,7 @@ export default {
 		return {
 			name: 'boxCard',
 			dateType: 'min',
+			balancedId:null,
 			routeIds: [],
 			timer: '',
 			avatar: 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif',
@@ -86,8 +87,9 @@ export default {
 		init() {
 			console.log("routeTable", this.routeTable);
 		},
-		loadCard(data){
+		loadCard(balancedId, data){
 			console.log("data", data);
+			this.balancedId = balancedId;
 			if (data != null && data != undefined){
 				this.routeIds = [];
 				data.forEach((row,index)=>{					
@@ -98,7 +100,7 @@ export default {
 		},
 		loadAccessCard(){
 			if (this.routeIds != null && this.routeIds.length > 0){
-				this.$refs.routeAccessChart.loadAccessCard(this.routeIds, this.dateType);
+				this.$refs.routeAccessChart.loadAccessCard(this.balancedId, this.routeIds, this.dateType);
 			}
 		}
 	}

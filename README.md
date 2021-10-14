@@ -27,6 +27,14 @@
 
 #### 更新记录
 
+ ++++++++ **snapshot-nacos.v.3.1** 
+1. 优化网关发布后，通过nacos配置中心实时推送并加载网关配置，替代原定时扫描模式
+2. 增加基于jwt的客户端访问网关Token权限较验
+3. 代码优化，界面微调，已知问题题修复
+4. doc增加示例数据脚本
+
+注：前端需要同步更新到snapshot-nacos.v.3.1
+
  ++++++++ **snapshot-nacos.v.3.0** 
 1. 升级springcloud Hoxton.SR10\springboot 2.3.9.RELEASE版本
 2. 去除eureka注册发现中心，改为nacos（2.0.3版本）实现动态服务注册与发现、配置管理

@@ -31,7 +31,7 @@
 						<el-button icon="el-icon-folder-add" type="primary" @click="handleCreateIp"></el-button>
 					</div>
 					<div style="float: right;">
-						<el-input placeholder="请输入IP" v-model="ip" :maxlength="15" class="input-with-select" style="width: 520px;">
+						<el-input placeholder="请输入IP" v-model="ip" :maxlength="15" class="input-with-select" style="width: 520px;" clearable>
 							<el-select v-model="status" slot="prepend" placeholder="请选择" style="width: 120px;">
 								<el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value" />
 							</el-select>

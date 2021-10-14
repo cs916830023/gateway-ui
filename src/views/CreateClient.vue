@@ -14,6 +14,9 @@
 						<el-form-item label="名称" prop="name">
 							<el-input v-model="form.name" style="width: 300px;" :disabled="nameDisabled"></el-input>
 						</el-form-item>
+						<el-form-item label="系统代号" prop="systemCode">
+							<el-input v-model="form.systemCode" style="width: 300px;" :disabled="nameDisabled"></el-input>
+						</el-form-item>
 						<el-form-item label="分组" prop="groupCode">
 							<el-select filterable v-model="form.groupCode" placeholder="请选择分组" style="width: 300px;">
 								<el-option v-for="item in groupOptions" :key="item.value" :label="item.label" :value="item.value" />
@@ -47,6 +50,7 @@ export default {
 			form: {
 				id: null,
 				name: null,
+				systemCode: null,
 				groupCode: null,
 				ip: null,
 				status: null,
@@ -54,7 +58,11 @@ export default {
 			},
 			rules: {
 				name: [
-					{ required: true, message: '请输入客名称', trigger: 'blur' }, 
+					{ required: true, message: '请输入客户端名称', trigger: 'blur' }, 
+					{ min: 2, max: 40, message: '长度在 2 到 40 个字符', trigger: 'blur' },
+				],
+				systemCode: [
+					{ required: true, message: '请输入客户端系统代号', trigger: 'blur' }, 
 					{ min: 2, max: 40, message: '长度在 2 到 40 个字符', trigger: 'blur' },
 				],
 				groupCode: [
@@ -65,11 +73,10 @@ export default {
 					{ min: 8, max: 16, message: '长度在 8 到 16 个字符，如：0.0.0.0', trigger: 'blur' },
 				],
 				status: [
-					{ required: true, message: '请选择活动资源', trigger: 'change' }
+					{ required: true, message: '请选择状态', trigger: 'change' }
 				],
 				remarks: [
-					{ required: false, message: '请填写活动形式', trigger: 'blur' }, 
-					{ min: 2, max: 200, message: '长度在 2 到 200 个字符', trigger: 'blur' },
+					{ min: 2, max: 200, message: '长度在 2 到 200 个字符', trigger: 'blur' }
 				]
 			},
 			handleType: 'add',

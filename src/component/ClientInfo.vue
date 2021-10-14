@@ -30,7 +30,7 @@
 			<el-table-column label="服务ID" prop="id"></el-table-column>
 			<el-table-column label="服务名称" prop="name"></el-table-column>
 			<el-table-column label="状态" width="70" prop="status">
-				<template slot-scope="scope">
+				<template>
 					<el-tag size="mini">{{'允许通行'}}</el-tag>
 				</template>
 			</el-table-column>		

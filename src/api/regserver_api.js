@@ -201,3 +201,25 @@ export const regClientList = data => {
         data
     })
 };
+
+/**
+ * 创建当前网关路由注册客户端的TOKEN令牌
+ */
+ export const createRegClientToken = data => {
+    return service({
+        url: '/regServer/createToken',
+        method: 'post',
+        data
+    })
+};
+
+/**
+ * 移除当前网关路由注册客户端的TOKEN令牌
+ */
+ export const removeRegClientToken = data => {
+    return service({
+        url: '/regServer/removeToken',
+        method: 'post',
+        data
+    })
+};

@@ -16,10 +16,9 @@
 					</el-menu>
 				</el-col>
 				<el-col :span="4" style="line-height: 60px; height: 60px;">
-					  <!-- <el-avatar style="float: right; margin-top: 16px;" size="small" icon="el-icon-notebook-2" ></el-avatar> -->
-					  <span style="float: right; color: rgba(255, 255, 255, 0.5); margin-right: 20px; font-size: 14px;" title="系统版本">
-						<i class="el-icon-collection-tag el-icon--left"></i>
-						版本 snapshot-nacos.v.3.0
+					  <span style="float: right; color: rgba(255, 255, 255, 0.5); margin-right: 20px; font-size: 14px;">
+						<a :href="gatewayRoutesURL" target="_blank" style="text-decoration: none; color: #AAAEB2;" class="iconfont icon-liebiao" title="网关路由生效配置列表"></a>&nbsp;&nbsp;
+						<i class="el-icon-collection-tag el-icon--left" title="系统版本"> 版本 {{GLOBAL_VAR.systemVersion}}</i>
 					</span>
 				</el-col>
 			</el-row>
@@ -27,6 +26,7 @@
 		<el-main>
 			<!-- 回到顶部 -->
 			<template><el-backtop>UP</el-backtop></template>
+			<!-- 主页面 -->
 			<router-view name="mainView" ref="viewPage" v-if="isRouterAlive" />			
 		</el-main>
 	</el-container>
@@ -39,7 +39,8 @@ export default {
 	data() {
 		return {
 			isRouterAlive: true,
-			isDisabled: true
+			isDisabled: true,
+			gatewayRoutesURL: this.GLOBAL_VAR.gatewayRoutesURL + '/actuator/gateway/routes'
 		};
 	},
 	created: function() {		

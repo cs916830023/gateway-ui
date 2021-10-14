@@ -251,6 +251,19 @@ function append(data, newChild) {
 	return undefined; //表示child与data无父子关系
 }
 
+/**
+ * 复制内容
+ * @param {Object} data 
+ */
+function copy(data){
+	let inputObj = document.createElement('input');
+	inputObj.value = data;
+	document.body.appendChild(inputObj);
+	inputObj.select();
+	document.execCommand('Copy');
+	successMsg('复制成功');
+	inputObj.remove();
+}
 
 //导出全局变量
 export default {
@@ -270,5 +283,6 @@ export default {
 	removeLocalStorage,
 	getSessionStorage,
 	setSessionStorage,
-	removeSessionStorage	
+	removeSessionStorage,
+	copy
 }

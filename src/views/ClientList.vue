@@ -12,7 +12,7 @@
 					    <el-button icon="el-icon-folder-add" type="primary" @click="handleCreateClient"></el-button>
 					</div>
 					<div style="float: right;">
-					  <el-input placeholder="请输入客户端名称" v-model="form.name" class="input-with-select" style="width: 620px;">
+					  <el-input placeholder="请输入客户端名称" v-model="form.name" class="input-with-select" style="width: 620px;" clearable>
 						<el-select v-model="form.groupCode" slot="prepend" placeholder="请选择分组" style="width: 140px; margin-right: 10px;">
 							<el-option label="所有" value=""/>
 							<el-option v-for="item in groupOptions" :key="item.value" :label="item.label" :value="item.value"/>
@@ -36,10 +36,15 @@
 				</el-table-column>
 				<el-table-column label="分组">
 					<template slot-scope="scope">
-						<el-tag v-for="group in groupOptions" :key="group.value" v-if="(group.value === scope.row.groupCode)" size="small" type="">{{group.label}}</el-tag>
+						<el-tag v-for="group in groupOptions" :key="group.value" v-show="group.value === scope.row.groupCode" size="small" type="">{{group.label}}</el-tag>
 					</template>
 				</el-table-column>
-				<el-table-column label="名称" prop="name"></el-table-column>
+				<el-table-column label="系统代号>客户端名称">
+					<template slot-scope="scope">
+						<span style="font-weight: bold;" v-if="scope.row.systemCode != undefined && scope.row.systemCode != ''">{{scope.row.systemCode}} ></span> {{scope.row.name}}
+					</template>
+				</el-table-column>
+				<!-- <el-table-column label="系统代号" prop="systemCode"></el-table-column> -->
 				<el-table-column label="IP地址">
 					<template slot-scope="scope">
 						<el-tag size="small" type="success">{{scope.row.ip}}</el-tag>
@@ -52,7 +57,7 @@
 						<el-tag effect="dark" size="small" v-if="scope.row.status === '1'" type="danger">禁用</el-tag>
 					</template>
 				</el-table-column>
-				<el-table-column label="备注" prop="remarks"></el-table-column>
+				<el-table-column label="备注" prop="remarks" width="350"></el-table-column>
 				<el-table-column label="操作" width="120">
 					<template slot-scope="scope">
 						<el-dropdown trigger="click" @command="handleCommandClient">
