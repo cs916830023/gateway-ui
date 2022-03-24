@@ -9,7 +9,7 @@ const gatewayRoutesURL = "http://127.0.0.1:8771"
 const errMsg = "操作失败"
 const successMsg = "操作成功"
 const contentType = "application/json;charset=UTF-8"
-const systemVersion = "snapshot-nacos.v.3.1"
+const systemVersion = "snapshot-nacos.v.3.2"
 
 // 分组类型，暂不放到数据字典，直接由前端添加
 const groups = [

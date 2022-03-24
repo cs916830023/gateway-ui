@@ -59,22 +59,12 @@
 							</div>
 							<div style="float: left; margin-left: 10px;">
 								<el-popover placement="bottom" trigger="click">
-								  <!-- <el-radio v-model="form.groupCode" v-for="item in groupOptions" :key="item.value" :label="item.label" :value="item.value" @change=""></el-radio> -->
 								  <el-radio-group v-model="form.groupCode" size="mini" @change="handleSelectedGroup">
 									  <el-radio-button v-for="item in groupOptions" :key="item.value" :label="item.value">{{item.label}}</el-radio-button>
 								  </el-radio-group>
 								  <el-button slot="reference">分组:{{groupName}}<i class="el-icon-caret-bottom el-icon--right"></i></el-button>
 								</el-popover>
 							</div>
-							<!-- <div style="float: left; margin-left: 10px;">
-								<el-popover placement="bottom" width="450" trigger="click">
-								  <el-input placeholder="示例：RequestParameter=version,v01" v-model="form.requestParameter" >
-									<template slot="prepend">RequestParameter=</template>
-								  </el-input>
-								  <el-button slot="reference">参数RequestParameter={{form.requestParameter}}<i class="el-icon-caret-bottom el-icon--right"></i></el-button>
-								</el-popover>
-							</div> -->
-							
 						</el-col>
 					</el-row>
 					
@@ -189,7 +179,7 @@
 					  </el-collapse-item>
 					</el-collapse>
 				</el-card>
-				
+
 				<el-card class="box-card" style="margin-top: 20px;">
 					<div slot="header" class="clearfix">
 						<span>监控器</span>
@@ -245,7 +235,6 @@
 				<el-card class="box-card">
 					<div slot="header" class="clearfix">
 						<span>过滤器</span>
-						<!-- <el-button style="float: right; padding: 3px 0; " icon="el-icon-question" type="text">说明</el-button> -->
 						<el-popover trigger="click" placement="bottom">
 							<div style="font-size: 10pt;">
 								<span>配置说明：</span><br/>
@@ -334,8 +323,9 @@
 					  </el-collapse-item>
 					</el-collapse>
 				</el-card>
-				
+
 			</el-col>
+
 			<el-col :span="6">
 				<el-card class="box-card">
 					<div slot="header" class="clearfix">
@@ -440,6 +430,8 @@
 					fallbackTimeout:0,
 					replenishRate:20,
 					burstCapacity:100,
+					burstFrequency:100,
+					burstTimeUnit:'min',//minute,hour,day,week,month,year
 					groupCode:'',
 					monitor:{
 						recover: '0',

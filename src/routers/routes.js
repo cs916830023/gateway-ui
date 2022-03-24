@@ -1,6 +1,7 @@
 import Main from '../views/Main.vue'
 import GatewayList from '../views/GatewayList.vue'
 import CreateGateway from '../views/CreateGateway.vue'
+import AddGroovyScript from '../views/AddGroovyScript'
 import ClientList from '../views/ClientList.vue'
 import CreateClient from '../views/CreateClient.vue'
 import IpList from '../views/IpList.vue'
@@ -96,6 +97,14 @@ let routes = [
 			    hidden: true,
 				components: {
 					mainView: AddClientGateway
+				}
+			},
+			{
+			    path: '/addGroovyScript',
+			    name: '添加规则组件',
+			    hidden: true,
+				components: {
+					mainView: AddGroovyScript
 				}
 			},
 			{

@@ -89,11 +89,12 @@
 						   <el-button size="mini" type="warning">
 						      管理<i class="el-icon-arrow-down el-icon--right"></i>
 						    </el-button>
-						  <el-dropdown-menu slot="dropdown" >
+						  <el-dropdown-menu slot="dropdown">
 							<el-dropdown-item icon="el-icon-user" :command="{command:'addClient', row: scope.row}">注册客户端</el-dropdown-item>
 							<el-dropdown-item icon="el-icon-tickets" :command="{command:'info', row: scope.row}">详情</el-dropdown-item>
 							<el-dropdown-item icon="el-icon-orange" :command="{command:'topology', row: scope.row}">拓扑</el-dropdown-item>
 							<el-dropdown-item icon="el-icon-edit" :command="{command:'edit', row: scope.row}">编辑</el-dropdown-item>
+							<el-dropdown-item icon="el-icon-eleme" :command="{command:'rule', row: scope.row}">规则组件</el-dropdown-item>
 							<el-dropdown-item :command="{command:'start', row: scope.row}" divided><i class="el-icon-success" style="color: #409EFF;"></i>启用</el-dropdown-item>
 							<el-dropdown-item :command="{command:'stop', row: scope.row}"><i class="el-icon-error" style="color: red;"></i>禁用</el-dropdown-item>
 							<el-dropdown-item icon="el-icon-delete" :command="{command:'delete', row: scope.row}" divided>删除</el-dropdown-item>
@@ -199,10 +200,11 @@
 				} else if (obj.command === 'info'){
 					this.drawer = true;
 					this.infoForm = obj.row;
-				}  else if (obj.command === 'edit'){
+				} else if (obj.command === 'edit'){
 					this.infoForm = obj.row;
-					console.log(obj.row);
 					this.$router.push({path:'/createGateway',query:{handleType:'edit',route:this.newRoute(obj.row)}});
+				} else if (obj.command === 'rule'){
+					this.$router.push({path:'/addGroovyScript',query:{route:this.newRoute(obj.row)}});
 				} else if (obj.command === 'start'){
 					startRoute({id:obj.row.id}).then(function(result){
 						_this.GLOBAL_FUN.successMsg();

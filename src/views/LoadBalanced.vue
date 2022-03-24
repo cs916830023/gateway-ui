@@ -36,7 +36,9 @@
 				<el-table size="small" :data="tableData" style="width: 100%">
 					<el-table-column label="服务名称">
 						<template slot-scope="scope">
-							<el-tag size="small" type="warning" style="font-weight: bold;">{{scope.row.name}}</el-tag>
+							<el-tooltip effect="dark" :content="scope.row.name" placement="top-start">
+								<el-tag size="small" type="warning" style="font-weight: bold;">{{scope.row.name}}</el-tag>
+							</el-tooltip>
 						</template>
 					</el-table-column>
 					

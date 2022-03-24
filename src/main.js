@@ -3,21 +3,23 @@ import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import App from './App.vue'
 
-// 引入router, 'cnpm install vue-router'
+// 引入router, 'cnpm install vue-router -S'
 import VueRouter from 'vue-router'
 import routes from './routers/routes.js'
 // 引入axios, 'cnpm install axios -S'
 import axios from 'axios'
-// 引入echarts, 'cnpm install echarts'
+// 引入echarts, 'cnpm install echarts -S'
+// echarts v5.x后通过require('echarts')引入
 import echarts from 'echarts'
-//  引入echarts-gl, 'cnpm install echarts-gl'
+//  引入echarts-gl, 'cnpm install echarts-gl -S'
 import 'echarts-gl'
-//  引入babel-polyfill, 'cnpm install --save babel-polyfill'
+//  引入babel-polyfill, 'cnpm install --save babel-polyfill -S'
 import 'babel-polyfill'
 // import with ES6
 import mavonEditor from 'mavon-editor'
 import 'mavon-editor/dist/css/index.css'
-
+// 引入页面代码高亮插件 'cnpm install prismjs -S'
+import Prism from 'prismjs';
 
 // require('echarts/lib/chart/bar')
 // require('echarts/lib/commponent/tooltip')
@@ -31,11 +33,13 @@ import GLOBAL_FUN from './api/global_function.js'
 Vue.use(ElementUI)
 Vue.use(VueRouter)
 Vue.use(mavonEditor)
+Vue.use(Prism)
 
 //绑定到vue属性
 Vue.prototype.GLOBAL_VAR = GLOBAL_VAR
 Vue.prototype.GLOBAL_FUN = GLOBAL_FUN
 Vue.prototype.$ajax = axios
+// Vue.prototype.$echarts = require('echarts')
 Vue.prototype.$echarts = echarts
 
 /**

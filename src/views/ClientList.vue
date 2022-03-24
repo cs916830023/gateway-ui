@@ -44,7 +44,6 @@
 						<span style="font-weight: bold;" v-if="scope.row.systemCode != undefined && scope.row.systemCode != ''">{{scope.row.systemCode}} ></span> {{scope.row.name}}
 					</template>
 				</el-table-column>
-				<!-- <el-table-column label="系统代号" prop="systemCode"></el-table-column> -->
 				<el-table-column label="IP地址">
 					<template slot-scope="scope">
 						<el-tag size="small" type="success">{{scope.row.ip}}</el-tag>

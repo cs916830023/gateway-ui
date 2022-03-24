@@ -63,7 +63,7 @@ export default {
 				article_count: 1024,
 				pageviews_count: 1024
 			},
-			colors: ['#00ADD0', '#FFA12F', '#B62AFF', '#727CF5', '#1890FF', '#00f6ff', '#20C0F4', '#95F300', '#04FDB8', '#AF5AFF'],
+			colors: ['#00ADD0', '#FFA12F', '#B62AFF', '#727CF5', '#1890FF', '#00f6ff', '#20C0F4', '#95F300', '#04FDB8', '#AF5AFF'],			
 			// customColors: [
 			// 	{ color: '#00ADD0', percentage: 20 },
 			// 	{ color: '#FFA12F', percentage: 40 },
