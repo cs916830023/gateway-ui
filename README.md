@@ -16,7 +16,7 @@
 6.  cnpm install --save babel-polyfill
 7.  cnpm install mavon-editor --save
 
-> 详细安装文档：**[flying-fish-gateway-说明文档.docx](https://gitee.com/omsgit/flying-fish-gateway/tree/snapshot.v.1.0/doc)**
+> 详细安装文档：**[flying-fish-gateway-说明文档.docx](https://gitee.com/omsgit/flying-fish-gateway/tree/snapshot.v.3.2/doc)**
 
 #### 使用说明
 
@@ -26,6 +26,13 @@
 3.  运行：cnpm run dev
 
 #### 更新记录
+
+  ++++++++ **snapshot-nacos.v.3.2** 
+ 1. 增加基于groovy语言开发网关路由动态规则组件
+ 2. 代码优化，界面微调，已知问题题修复
+ 3. 更新VUE前端package.json中的插件版本
+ 
+ 注：前端需要同步更新到snapshot-nacos.v.3.2
 
  ++++++++ **snapshot-nacos.v.3.1** 
 1. 优化网关发布后，通过nacos配置中心实时推送并加载网关配置，替代原定时扫描模式
