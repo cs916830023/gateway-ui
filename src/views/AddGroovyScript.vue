@@ -244,10 +244,12 @@
 				if (this.$refs['groovyForm']){
 					this.$refs['groovyForm'].resetFields();
 				}
+				this.handleType = 'add';
 				this.groovyForm = this.$options.data().groovyForm;
 				this.dialogFormVisible = true;
 			},
 			submitForm(){
+				console.log('handleType', this.handleType);
 				let _this = this;				
 				this.$refs['groovyForm'].validate((valid) => {
 					if (valid) {		
